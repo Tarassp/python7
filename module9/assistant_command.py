@@ -23,5 +23,15 @@ class AssistantCommand(Enum):
         @property
         def max_command_words(cls) -> int:
             return 2
+        
+        @property
+        def max_value_words(self) -> int:
+            match self:
+                case AssistantCommand.HELLO | AssistantCommand.SHOW | AssistantCommand.EXIT | AssistantCommand.HELP:
+                    return 0
+                case AssistantCommand.PHONE:
+                    return 1
+                case _:
+                    return 2
 
     

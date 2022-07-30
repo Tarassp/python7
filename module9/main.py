@@ -2,37 +2,23 @@ from email import message
 from assistant_parser import AssistantParser
 from assistant_command import AssistantCommand
 from assistant import Assistant
+from assistant_handlers import get_handler
 
 def main():
-    assistant = Assistant()
     message = ''
     while True:
-        line = input("Enter your command(type 'help' for more info): ")
+        line = input("Enter your command: ")
         try:
             parser = AssistantParser(line)
-            match parser.command:
-                case AssistantCommand.HELLO:
-                    message = assistant.say_hello()
-                case AssistantCommand.ADD:
-                    message = assistant.add_contact(parser.value)
-                case AssistantCommand.CHANGE:
-                    message = assistant.change_contact(parser.value)
-                case AssistantCommand.PHONE:
-                    contact_name = parser.value[0]
-                    message = assistant.get_phone(contact_name)
-                case AssistantCommand.SHOW:
-                    message = assistant.get_contacts()
-                case AssistantCommand.HELP:
-                    message = assistant.get_command_descripions()
-                case AssistantCommand.EXIT:
-                    message = assistant.say_exit()
+            command = parser.get_command()
+            value = parser.get_value()
+            message = get_handler(command)(value)
             
-            print(message)
-            
-            if parser.command is AssistantCommand.EXIT:
+            if message:
+                print(message)
+
+            if command is AssistantCommand.EXIT:
                 break
-            
-        except Exception as e:
-            print(e)
-    
+        except:
+            print("Type 'help' to see the commands.")
 main()
