@@ -1,8 +1,9 @@
 from assistant_command import AssistantCommand
 from error_decorator import *
 from assistant_exceptions import *
+from address_book import AddressBook
 
-CONTACTS = dict[str,str]()
+CONTACTS = AddressBook()
 
 @input_error
 def handle_hello(value) -> str:

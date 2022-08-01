@@ -1,7 +1,6 @@
 from email import message
 from assistant_parser import AssistantParser
 from assistant_command import AssistantCommand
-from assistant import Assistant
 from assistant_handlers import get_handler
 
 def main():
