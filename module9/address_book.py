@@ -1,7 +1,6 @@
-from ast import Name
 from collections import UserDict
 
-from fields import Phone, Name
+from fields import Birthday, Phone, Name
 from record import Record
 
 class AddressBook(UserDict):
@@ -15,3 +14,8 @@ class AddressBook(UserDict):
         for record in self.data.values():
             if phone in record.phones:
                 return record
+            
+    def iterator(self, n):
+        records: list[Record] = list(self.data.values())
+        for i in range(0, len(records), n):
+            yield records[i: i+n]
