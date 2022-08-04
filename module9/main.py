@@ -1,17 +1,19 @@
-from email import message
 from assistant_parser import AssistantParser
 from assistant_command import AssistantCommand
-from assistant_handlers import get_handler
+from address_book_service import AddressBookService
+from local_storage import LocalStorage
 
 def main():
     message = ''
+    storage = LocalStorage()
+    assistant = AddressBookService(storage)
     while True:
         line = input("Enter your command: ")
         try:
             parser = AssistantParser(line)
             command = parser.get_command()
             value = parser.get_value()
-            message = get_handler(command)(value)
+            message = assistant.handle(command, value)
             
             if message:
                 print(message)

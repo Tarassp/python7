@@ -15,6 +15,6 @@ class AssistantParser:
                 return command
         return AssistantCommand.UNKNOWN
     
-    def get_value(self):
+    def get_value(self) -> list[str]:
         value = self.__line_parameters[self.quantity_words_in_command:]
         return value

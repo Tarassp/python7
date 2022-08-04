@@ -22,3 +22,8 @@ class IncorrectPhoneFormat(Exception):
     def __init__(self, message = "Incorrect phone number format, should be '(+)(38)0xxxxxxxxx'"):
         self.message = message
         super().__init__(self.message)
+
+class IncorrectFileName(Exception):
+    def __init__(self, message = "Incorrect file name, should be <filename> + extension"):
+        self.message = message
+        super().__init__(self.message)

@@ -24,6 +24,11 @@ class Field:
     
     def __init__(self, value: str) -> None:
         self._value = value if self._validate(value) else self._throw_exeption()
+        
+    def __contains__(self, other):
+        if isinstance(other, str):
+            return other.lower() in self._value.lower()
+        return False
     
     def __str__(self) -> str:
         return self._value or 'Incorrect value'
@@ -42,7 +47,6 @@ class Phone(Field):
     
     def _throw_exeption(self) -> None:
         raise IncorrectPhoneFormat()
-            
     
     def __str__(self) -> str:
         return 'Phone: ' + super().__str__()
@@ -64,3 +68,5 @@ class Birthday(Field):
     
     def __str__(self) -> str:
         return 'Birthday: ' + super().__str__()
+    
+    

@@ -8,6 +8,9 @@ class AssistantCommand(Enum):
         PHONE = ['phone']
         SHOW = ['show all']
         EXIT = ['exit', 'close', 'good bye']
+        LOAD = ['load']
+        SAVE = ['save']
+        SEARCH = ['search']
         HELP = ['help']
         UNKNOWN = ['unknown']
         
@@ -29,7 +32,7 @@ class AssistantCommand(Enum):
             match self:
                 case AssistantCommand.HELLO | AssistantCommand.SHOW | AssistantCommand.EXIT | AssistantCommand.HELP:
                     return 0
-                case AssistantCommand.PHONE:
+                case AssistantCommand.PHONE | AssistantCommand.SEARCH | AssistantCommand.LOAD | AssistantCommand.SAVE:
                     return 1
                 case _:
                     return 2
