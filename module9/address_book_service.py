@@ -1,5 +1,3 @@
-
-from jmespath import search
 from address_book import AddressBook
 from assistant_command import AssistantCommand
 from error_decorator import *
@@ -11,8 +9,8 @@ from local_storage import Storage
 
 class AddressBookService:
     
-    def __init__(self, storage: Storage) -> None:
-        self.address_book = AddressBook()
+    def __init__(self, storage: Storage, address_book: AddressBook) -> None:
+        self.address_book = address_book
         self.__storage = storage
         self.__handlers = {
             AssistantCommand.HELLO: self.__handle_hello,
@@ -58,7 +56,8 @@ class AddressBookService:
     def __handle_phone(self, value: list[str]) -> str:
         if len(value) != 1:
             raise UnknownAssistentValue('Give me name.')
-        return self.address_book.get(value[0].lower(), "The specified contact does not exist.")
+        record = self.address_book.find_by_name(Name(value[0])) or "The specified contact does not exist."
+        return str(record) 
     
     @input_error
     def __handle_search(self, value: list[str]) -> str:
@@ -110,7 +109,7 @@ class AddressBookService:
         commands = ['HELLO', 'ADD <name> <phone>',
                     'CHANGE <name> <phone>', 'PHONE <name>',
                     'SEARCH <text>',
-                    'LOAD <filename>', 'SAVE <filename>'
+                    'LOAD <filename>', 'SAVE <filename>',
                     'SHOW ALL', 'GOOD BYE', 'CLOSE', 'EXIT']
         return '\n'.join(commands)
     

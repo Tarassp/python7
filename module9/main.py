@@ -1,3 +1,4 @@
+from address_book import AddressBook
 from assistant_parser import AssistantParser
 from assistant_command import AssistantCommand
 from address_book_service import AddressBookService
@@ -6,7 +7,8 @@ from local_storage import LocalStorage
 def main():
     message = ''
     storage = LocalStorage()
-    assistant = AddressBookService(storage)
+    adress_book = AddressBook()
+    assistant = AddressBookService(storage, adress_book)
     while True:
         line = input("Enter your command: ")
         try:

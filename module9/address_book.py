@@ -10,7 +10,10 @@ class AddressBook(UserDict):
         return self.data.pop(record.name.value)
         
     def find_by_name(self, name: Name) -> Record | None:
-        return self.data.get(name.value)
+        for key, value in self.data.items():
+            if key.lower() == name.value.lower():
+                return value
+        return None
     
     def find_by_phone(self, phone: Phone) -> Record | None:
         for record in self.data.values():
