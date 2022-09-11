@@ -1,32 +1,23 @@
 import pickle
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import Protocol
 
-class Storage(ABC):
+class StorageInterface(Protocol):
     @abstractmethod
-    def save(self, object):
-        pass
+    def save(self, object, filename):
+        raise NotImplementedError
     
     @abstractmethod
-    def restore(self):
-        pass
-    
-    @abstractmethod
-    def set_file_name(self, name):
-        pass
+    def load(self, filename):
+        raise NotImplementedError
 
 
-class LocalStorage(Storage):
-    def __init__(self, file_name: str = 'data.bin') -> None:
-        self.__file_name = file_name
-        
-    def set_file_name(self, name: str):
-        self.__file_name = name
-        
-    def save(self, object):
-        with open(self.__file_name, "wb") as fh:
+class LocalStorage(StorageInterface):
+    def save(self, object, filename):
+        with open(filename, "wb") as fh:
             pickle.dump(object, fh)
             
-    def restore(self):
-        with open(self.__file_name, "rb") as fh:
+    def load(self, filename):
+        with open(filename, "rb") as fh:
             unpacked = pickle.load(fh)
             return unpacked
